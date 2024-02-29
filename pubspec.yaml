@@ -62,6 +62,7 @@ flutter:
   assets:
     - assets/ctu-logo.png
     - assets/id-template.jpg
+    - assets/ctu-template.png
     - assets/asean-logo.png
     - assets/2BY2.jpg
     - assets/signature.png

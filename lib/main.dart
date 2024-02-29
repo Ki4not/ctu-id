@@ -24,11 +24,11 @@ class _FrontViewState extends State<frontView> {
       body: Container(
           decoration: const BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('assets/id-template.jpg'),
+            image: AssetImage('assets/ctu-template.png'),
             fit: BoxFit.cover,
           )),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 90.0, 30.0, 10.0),
+            padding: const EdgeInsets.fromLTRB(30.0, 70.0, 30.0, 10.0),
             child: Column(
               children: [
                 const Row(
