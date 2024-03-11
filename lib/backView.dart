@@ -1,5 +1,6 @@
 import 'package:activity1/main.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(const MaterialApp(
       home: backView(),
@@ -232,7 +233,7 @@ class _backViewState extends State<backView> {
                     Text(
                       'The person whose picture and signature appear hereon is a',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ],
@@ -243,13 +244,13 @@ class _backViewState extends State<backView> {
                     Text(
                       'bonafide student of ',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                     Text(
                       'Cebu Technological University',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -273,18 +274,18 @@ class _backViewState extends State<backView> {
                     Text(
                       'This card is non transferable property of ',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                     Text(
                       'CTU ',
                       style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.bold),
+                          fontSize: 10.0, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       'and must be',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ],
@@ -295,7 +296,7 @@ class _backViewState extends State<backView> {
                     Text(
                       'surrendered upon graduation or transfer.',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ],
@@ -318,7 +319,7 @@ class _backViewState extends State<backView> {
                     Text(
                       'Card must be presented upon entry and must worn when ',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ],
@@ -329,7 +330,7 @@ class _backViewState extends State<backView> {
                     Text(
                       'inside the university premises. ',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ],
@@ -352,7 +353,7 @@ class _backViewState extends State<backView> {
                     Text(
                       'Tampering invalidates this card and subject to disciplinary ',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ],
@@ -363,7 +364,7 @@ class _backViewState extends State<backView> {
                     Text(
                       'action.',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ],
@@ -386,7 +387,7 @@ class _backViewState extends State<backView> {
                     Text(
                       'In case of loss, please report to SAO office.',
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ],
@@ -399,10 +400,7 @@ class _backViewState extends State<backView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => frontView()));
-                    },
+                    onPressed: () => _dialogueBuilder(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red[500],
                     ),
@@ -432,4 +430,47 @@ class _backViewState extends State<backView> {
       ),
     );
   }
+}
+
+// Alert to confirm redirecting to front view
+Future<void> _dialogueBuilder(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Confirmation', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.lightBlue),),
+          content: const Text('Are you sure you want to continue?'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          elevation: 25,
+          actions: [
+            // Confirm Button
+            TextButton(
+              onPressed: () {
+                Fluttertoast.showToast(
+                  // Toast to tell user that it is being redirected to front view
+                  msg: 'This is the front view of your ID',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => frontView()));
+              },
+              child: Text('Confirm', style: TextStyle(color: Colors.lightBlue),),
+              style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge),
+            ),
+
+            // Cancel Button
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel', style: TextStyle(color: Colors.red),),
+              style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge),
+            )
+          ],
+
+        );
+      });
 }

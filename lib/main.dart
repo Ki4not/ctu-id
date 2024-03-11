@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'backView.dart';
 
 void main() => runApp(const MaterialApp(
@@ -50,7 +51,7 @@ class _FrontViewState extends State<frontView> {
                       ],
                     ),
                     SizedBox(
-                      width: 20.0,
+                      width: 10.0,
                     ),
 
                     // SCHOOL NAME
@@ -68,14 +69,14 @@ class _FrontViewState extends State<frontView> {
                           style: TextStyle(
                               fontFamily: 'Lora',
                               fontWeight: FontWeight.bold,
-                              fontSize: 19.0),
+                              fontSize: 17.0),
                         ),
                         Text(
                           'UNIVERSITY',
                           style: TextStyle(
                               fontFamily: 'Lora',
                               fontWeight: FontWeight.bold,
-                              fontSize: 19.0),
+                              fontSize: 17.0),
                         ),
                         Row(
                           children: [
@@ -83,12 +84,17 @@ class _FrontViewState extends State<frontView> {
                               'Main Campus: ',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
+                                fontSize: 13.0
                               ),
                             ),
-                            Text('M.J. Cuenco Avenue')
+                            Text('M.J. Cuenco Avenue', style: TextStyle(
+                              fontSize: 13.0
+                            ),)
                           ],
                         ),
-                        Text('corner R. Palma St., Cebu City')
+                        Text('corner R. Palma St., Cebu City', style: TextStyle(
+                          fontSize: 13.0
+                        ),)
                       ],
                     ),
                   ],
@@ -194,21 +200,14 @@ class _FrontViewState extends State<frontView> {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10.0,
-                ),
+                
 
                 // BUTTON TO VIEW BACK PORTION
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => backView()));
-                        },
+                        onPressed: () => _dialogueBuilder(context),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red[500],
                         ),
@@ -226,4 +225,47 @@ class _FrontViewState extends State<frontView> {
           )),
     );
   }
+}
+
+// Alert to confirm redirecting to back view
+Future<void> _dialogueBuilder(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Confirmation', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.lightBlue),),
+          content: const Text('Are you sure you want to continue?'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          elevation: 25,
+          actions: [
+            // Confirm Button
+            TextButton(
+              onPressed: () {
+                // Toast to tell user that it is being redirected to back view
+                Fluttertoast.showToast(
+                  msg: 'This is the back view of your ID',
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => backView()));
+              },
+              child: Text('Confirm', style: TextStyle(color: Colors.lightBlue),),
+              style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge),
+            ),
+
+            // Cancel Button
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel', style: TextStyle(color: Colors.red),),
+              style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge),
+            )
+          ],
+
+        );
+      });
 }
